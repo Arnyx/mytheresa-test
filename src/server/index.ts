@@ -1,8 +1,14 @@
+import dotenv from 'dotenv';
+import express from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import express, { Request, Response, NextFunction } from 'express';
-import { createServer as createViteServer, ViteDevServer } from 'vite';
+import { createServer as createViteServer } from 'vite';
+import type { ViteDevServer } from 'vite';
+import routes from './presentation/routes';
+
+dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,15 +23,13 @@ async function createServer() {
 
   app.use(vite.middlewares);
 
-  app.get('/api/hello', (_req: Request, res: Response) => {
-    res.json({ message: 'Hello from API!' });
-  });
+  app.use('/api', routes);
 
   app.use('*all', async (req: Request, res: Response, next: NextFunction) => {
     const url = req.originalUrl;
 
     try {
-      let template = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf-8');
+      let template = fs.readFileSync(path.resolve(__dirname, '../../index.html'), 'utf-8');
       template = await vite.transformIndexHtml(url, template);
 
       const { render } = (await vite.ssrLoadModule('/src/entry-server.js')) as {
@@ -37,7 +41,7 @@ async function createServer() {
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {
-      vite.ssrFixStacktrace(e);
+      vite.ssrFixStacktrace(e as Error);
       next(e);
     }
   });
