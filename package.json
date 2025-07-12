@@ -7,7 +7,6 @@
     "dev": "tsx server/index.ts",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --outDir dist/server --ssr src/entry-server.js",
-    "serve": "node dist/server/index.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
