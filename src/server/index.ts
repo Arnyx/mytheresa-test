@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
 import fs from 'node:fs';
@@ -6,9 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer as createViteServer } from 'vite';
 import type { ViteDevServer } from 'vite';
-import routes from './presentation/routes';
-
-dotenv.config();
+import moviesRoutes from './presentation/routes/movies.routes';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -23,7 +20,7 @@ async function createServer() {
 
   app.use(vite.middlewares);
 
-  app.use('/api', routes);
+  app.use('/api/movies', moviesRoutes);
 
   app.use('*all', async (req: Request, res: Response, next: NextFunction) => {
     const url = req.originalUrl;

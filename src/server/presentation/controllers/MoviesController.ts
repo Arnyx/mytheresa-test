@@ -1,17 +1,45 @@
-import { GetMovies } from '@/server/domain/use-cases/GetMovies';
-import { TheMovieDbDatasourceImpl } from '@/server/infrastructure/datasources/impl/TheMovieDbDatasourceImpl';
-import { MovieRepositoryImpl } from '@/server/infrastructure/repositories/MovieRepositoryImpl';
 import type { Request, Response } from 'express';
+import type { MovieRepository } from '@/server/domain/repositories/MovieRepository';
+import { GetNowPlayingMoviesUseCase } from '@/server/domain/use-cases/GetNowPlayingMoviesUseCase';
+import { GetPopularMoviesUseCaseUseCase } from '@/server/domain/use-cases/GetPopularMoviesUseCase';
+import { GetTopRatedMoviesUseCase } from '@/server/domain/use-cases/GetTopRatedMoviesUseCase';
+import { safeParseInt } from '../helpers';
 
-export async function getMoviesController(_: Request, res: Response) {
-  try {
-    const datasource = new TheMovieDbDatasourceImpl();
-    const repository = new MovieRepositoryImpl(datasource);
-    const getPopularMovies = new GetMovies(repository);
+export function getNowPlayingMoviesController(repository: MovieRepository) {
+  return async (req: Request, res: Response) => {
+    try {
+      const page = safeParseInt(req.query.page as string) || 1;
+      const useCase = new GetNowPlayingMoviesUseCase(repository);
+      const movies = await useCase.execute({ page });
+      res.json(movies);
+    } catch {
+      res.status(500).json({ error: 'Failed to fetch now playing movies' });
+    }
+  };
+}
 
-    const movies = await getPopularMovies.execute();
-    res.json(movies);
-  } catch {
-    res.status(500).json({ error: 'Failed to fetch movies' });
-  }
+export function getPopularMoviesController(repository: MovieRepository) {
+  return async (req: Request, res: Response) => {
+    try {
+      const page = safeParseInt(req.query.page as string) || 1;
+      const useCase = new GetPopularMoviesUseCaseUseCase(repository);
+      const movies = await useCase.execute({ page });
+      res.json(movies);
+    } catch {
+      res.status(500).json({ error: 'Failed to fetch popular movies' });
+    }
+  };
+}
+
+export function getTopRatedMoviesController(repository: MovieRepository) {
+  return async (req: Request, res: Response) => {
+    try {
+      const page = safeParseInt(req.query.page as string) || 1;
+      const useCase = new GetTopRatedMoviesUseCase(repository);
+      const movies = await useCase.execute({ page });
+      res.json(movies);
+    } catch {
+      res.status(500).json({ error: 'Failed to fetch top rated movies' });
+    }
+  };
 }
