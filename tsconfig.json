@@ -4,7 +4,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@styles/*": ["src/client/styles/*"],
+      "@assets/*": ["src/client/assets/*"],
+      "@features/*": ["src/client/features/*"],
+      "@shared/*": ["src/client/shared/*"]
     }
   }
 }
