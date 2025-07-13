@@ -1,4 +1,4 @@
-export class TmdbApiClient {
+export class HttpClient {
   private readonly baseUrl: string;
   private readonly token: string;
 
@@ -7,7 +7,7 @@ export class TmdbApiClient {
     this.token = token;
 
     if (!this.baseUrl || !this.token) {
-      throw new Error('TMDB env vars not properly set');
+      throw new Error('env vars not properly set');
     }
   }
 
@@ -54,7 +54,7 @@ export class TmdbApiClient {
     });
 
     if (!res.ok) {
-      throw new Error(`TMDb API error: ${res.status} ${res.statusText}`);
+      throw new Error(`API error: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
