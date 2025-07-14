@@ -1,2 +1,49 @@
-.movie-carousel {
+$slide-size: calc(100% / 6);
+
+.movies-carousel {
+  max-width: 100%;
+
+  &__viewport {
+    overflow: hidden;
+  }
+
+  &__container {
+    display: flex;
+    height: 300px;
+    backface-visibility: hidden;
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    gap: 1rem;
+  }
+
+  &__slide {
+    min-width: 0;
+    flex: 0 0 $slide-size;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+
+  &__image {
+    width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &__lazy-load {
+    position: relative;
+    height: 100%;
+    background-color: $gray;
+
+    &--has-loaded {
+      .movies-carousel__image {
+        opacity: 1;
+      }
+    }
+
+    &:not(&--has-loaded) {
+      @extend %pulse;
+    }
+  }
 }
