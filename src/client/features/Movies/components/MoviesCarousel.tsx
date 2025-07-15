@@ -1,12 +1,12 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import type { Movie } from '@/server/domain/models/Movie';
-import { fetchMoviesByType } from '@/client/api/fetchMoviesByType';
+import { fetchMoviesByType } from '@/client/features/Movies/api/fetchMoviesByType';
 import type { MovieType } from '@/client/shared/types/MovieType';
 import type { EmblaCarouselType, EngineType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { CarouselImage } from './Image';
 import './carousel.scss';
+import { CarouselLazyImage } from './CarouselLazyImage';
 
 interface Props {
   type: MovieType;
@@ -14,7 +14,7 @@ interface Props {
   page?: number;
 }
 
-export const MovieCarousel = ({ type, title }: Props) => {
+export const MoviesCarousel = ({ type, title }: Props) => {
   const [slides, setSlides] = useState<Movie[]>([]);
   const listenForScrollRef = useRef(true);
   const scrollListenerRef = useRef<() => void>(() => undefined);
@@ -143,7 +143,7 @@ export const MovieCarousel = ({ type, title }: Props) => {
       <div className="movies-carousel__viewport" ref={emblaRef}>
         <div className="movies-carousel__container">
           {slides.map((movie: Movie, index: number) => (
-            <CarouselImage key={movie.id} inView={slidesInView.includes(index)} src={movie.imageUrl} />
+            <CarouselLazyImage key={movie.id} inView={slidesInView.includes(index)} src={movie.imageUrl} />
           ))}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import '../carousel.scss';
+import './carousel.scss';
 
 interface Props {
   inView: boolean;
@@ -8,7 +8,7 @@ interface Props {
 
 const PLACEHOLDER_SRC = `data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D`;
 
-export const CarouselImage = ({ inView, src }: Props) => {
+export const CarouselLazyImage = ({ inView, src }: Props) => {
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const setLoaded = useCallback(() => {
