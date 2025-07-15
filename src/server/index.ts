@@ -1,12 +1,13 @@
 import express from 'express';
-import type { NextFunction, Request, Response } from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
+import { Transform } from 'node:stream';
 import { fileURLToPath } from 'node:url';
-import { createServer as createViteServer } from 'vite';
 import type { ViteDevServer } from 'vite';
+import { createServer as createViteServer } from 'vite';
 import moviesRoutes from './presentation/routes/movies.routes';
 
+const ABORT_DELAY = 10000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 async function createServer() {
@@ -22,24 +23,56 @@ async function createServer() {
 
   app.use('/api/movies', moviesRoutes);
 
-  app.use('*all', async (req: Request, res: Response, next: NextFunction) => {
-    const url = req.originalUrl;
-
+  app.use('*all', async (req, res) => {
     try {
+      const url = req.originalUrl;
+
       let template = fs.readFileSync(path.resolve(__dirname, '../../index.html'), 'utf-8');
       template = await vite.transformIndexHtml(url, template);
 
-      const { render } = (await vite.ssrLoadModule('/src/entry-server.js')) as {
-        render: (url: string) => Promise<string>;
-      };
+      const render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render;
 
-      const appHtml = await render(url);
-      const html = template.replace(`<!--ssr-outlet-->`, () => appHtml);
+      let didError = false;
 
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
+      const { pipe, abort } = render(url, undefined, {
+        onShellError() {
+          res.status(500);
+          res.set({ 'Content-Type': 'text/html' });
+          res.send('<h1>Something went wrong</h1>');
+        },
+        onShellReady() {
+          res.status(didError ? 500 : 200);
+          res.set({ 'Content-Type': 'text/html' });
+
+          const transformStream = new Transform({
+            transform(chunk, encoding, callback) {
+              res.write(chunk, encoding);
+              callback();
+            },
+          });
+
+          const [htmlStart, htmlEnd] = template.split(`<!--ssr-outlet-->`);
+
+          res.write(htmlStart);
+
+          transformStream.on('finish', () => {
+            res.end(htmlEnd);
+          });
+
+          pipe(transformStream);
+        },
+        onError(error: unknown) {
+          didError = true;
+          console.error(error);
+        },
+      });
+
+      setTimeout(() => {
+        abort();
+      }, ABORT_DELAY);
     } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
-      next(e);
+      vite?.ssrFixStacktrace(e as Error);
+      res.status(500).end((e as Error).stack);
     }
   });
 
