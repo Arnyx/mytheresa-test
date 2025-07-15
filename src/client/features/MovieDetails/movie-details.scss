@@ -1,0 +1,47 @@
+.movie-details {
+  display: flex;
+  gap: 2rem;
+
+  &__title,
+  &__description {
+    margin: 0;
+  }
+
+  &__image-wrapper {
+    flex: 0 0 60%;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__button {
+    padding: 1rem 1.5rem;
+    background-color: #ff4d4f;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover,
+    &:focus {
+      background-color: #e04345;
+    }
+
+    &:active {
+      background-color: #c43b3d;
+    }
+  }
+}
