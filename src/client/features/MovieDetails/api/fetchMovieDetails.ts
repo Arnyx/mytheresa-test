@@ -1,7 +1,7 @@
 import type { MovieDetails } from '@/server/domain/models/MovieDetails';
 
 interface FetchMovieDetailsParams {
-  id?: string;
+  id?: number;
 }
 
 export async function fetchMovieDetails({ id }: FetchMovieDetailsParams): Promise<MovieDetails> {

@@ -1,16 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
-import { fetchMovieDetails } from './api/fetchMovieDetails';
+import { useWishlist } from '@/client/shared/hooks/useWishlist';
+import { useMovieDetails } from './hooks/useMovieDetails';
 import './movie-details.scss';
 
 type MovieDetailsProps = {
-  id: string;
+  id: number;
 };
 
 export const MovieDetails = ({ id }: MovieDetailsProps) => {
-  const { data, isLoading } = useQuery({
-    queryKey: ['movies', id],
-    queryFn: () => fetchMovieDetails({ id }),
-  });
+  const { data, isLoading } = useMovieDetails(id);
+  const { isInWishlist, toggleWishlist } = useWishlist();
+  const wishlisted = isInWishlist(id);
 
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No data found</p>;
@@ -24,7 +23,12 @@ export const MovieDetails = ({ id }: MovieDetailsProps) => {
         <h1 className="movie-details__title">{data.title}</h1>
         <p className="movie-details__description">{data.description}</p>
         <div className="movie-details__actions">
-          <button className="movie-details__button">Add to Wishlist</button>
+          <button
+            className={`movie-details__button ${wishlisted ? 'is-active' : ''}`}
+            onClick={() => toggleWishlist(data)}
+          >
+            {wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+          </button>
         </div>
       </div>
     </section>
