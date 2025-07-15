@@ -1,31 +1,26 @@
-import { useQuery } from '@tanstack/react-query';
-import type { Movie } from '@/server/domain/models/Movie';
-import { fetchMoviesByType } from '@/client/features/Movies/api/fetchMoviesByType';
-import type { MovieType } from '@/client/shared/types/MovieType';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { EmblaCarouselType, EngineType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import './carousel.scss';
-import { CarouselLazyImage } from './CarouselLazyImage';
 
-interface Props {
-  type: MovieType;
-  title: string;
-  page?: number;
-}
+type Props = {
+  slidesLength: number;
+  onEndReached: () => void;
+};
 
-export const MoviesCarousel = ({ type, title }: Props) => {
-  const [slides, setSlides] = useState<Movie[]>([]);
+const COPY_ENGINE_MODULES_ON_RELOAD: (keyof EngineType)[] = [
+  'scrollBody',
+  'location',
+  'offsetLocation',
+  'previousLocation',
+  'target',
+];
+
+export const useEmblaCarouselController = ({ slidesLength, onEndReached }: Props) => {
   const listenForScrollRef = useRef(true);
   const scrollListenerRef = useRef<() => void>(() => undefined);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [slidesInView, setSlidesInView] = useState<Set<number>>(new Set());
   const hasLoaded = useRef(false);
-  const [page, setPage] = useState(1);
-
-  const { data } = useQuery({
-    queryKey: ['movies', type, page],
-    queryFn: () => fetchMoviesByType({ type, page }),
-  });
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     dragFree: true,
@@ -34,17 +29,10 @@ export const MoviesCarousel = ({ type, title }: Props) => {
     watchSlides: (emblaApi) => {
       const reloadEmbla = (): void => {
         const oldEngine = emblaApi.internalEngine();
-
         emblaApi.reInit();
+
         const newEngine = emblaApi.internalEngine();
-        const copyEngineModules: (keyof EngineType)[] = [
-          'scrollBody',
-          'location',
-          'offsetLocation',
-          'previousLocation',
-          'target',
-        ];
-        copyEngineModules.forEach((engineModule) => {
+        COPY_ENGINE_MODULES_ON_RELOAD.forEach((engineModule) => {
           Object.assign(newEngine[engineModule], oldEngine[engineModule]);
         });
 
@@ -75,21 +63,11 @@ export const MoviesCarousel = ({ type, title }: Props) => {
   });
 
   useEffect(() => {
-    if (!data?.length) return;
-
-    setSlides((prev) => {
-      const existingIds = new Set(prev.map((movie) => movie.id));
-      const newUnique = data.filter((movie) => !existingIds.has(movie.id));
-      return [...prev, ...newUnique];
-    });
-  }, [data]);
-
-  useEffect(() => {
-    if (hasLoaded.current || !slides.length || !emblaApi) return;
+    if (hasLoaded.current || !slidesLength || !emblaApi) return;
 
     hasLoaded.current = true;
     emblaApi.reInit();
-  }, [emblaApi, slides.length]);
+  }, [emblaApi, slidesLength]);
 
   const onScroll = useCallback(
     (emblaApi: EmblaCarouselType) => {
@@ -101,34 +79,26 @@ export const MoviesCarousel = ({ type, title }: Props) => {
       if (!loadingMore && lastSlideInView) {
         listenForScrollRef.current = false;
         setLoadingMore(true);
-        setPage((prev) => prev + 1);
+        onEndReached();
       }
     },
-    [loadingMore]
-  );
-
-  const addScrollListener = useCallback(
-    (emblaApi: EmblaCarouselType) => {
-      scrollListenerRef.current = () => onScroll(emblaApi);
-      emblaApi.on('scroll', scrollListenerRef.current);
-    },
-    [onScroll]
+    [loadingMore, onEndReached]
   );
 
   useEffect(() => {
     if (!emblaApi) return;
-    addScrollListener(emblaApi);
+    scrollListenerRef.current = () => onScroll(emblaApi);
+    emblaApi.on('scroll', scrollListenerRef.current);
 
     const onResize = () => emblaApi.reInit();
     window.addEventListener('resize', onResize);
-    emblaApi.on('destroy', () => window.removeEventListener('resize', onResize));
-  }, [emblaApi, addScrollListener]);
 
-  const [slidesInView, setSlidesInView] = useState<number[]>([]);
+    emblaApi.on('destroy', () => window.removeEventListener('resize', onResize));
+  }, [emblaApi, onScroll]);
 
   const updateSlidesInView = useCallback((emblaApi: EmblaCarouselType) => {
     const inView = emblaApi.slidesInView();
-    setSlidesInView((prev) => [...new Set([...prev, ...inView])]);
+    setSlidesInView((prev) => new Set([...prev, ...inView]));
   }, []);
 
   useEffect(() => {
@@ -138,15 +108,5 @@ export const MoviesCarousel = ({ type, title }: Props) => {
     emblaApi.on('reInit', updateSlidesInView);
   }, [emblaApi, updateSlidesInView]);
 
-  return (
-    <section className="movies-carousel">
-      <div className="movies-carousel__viewport" ref={emblaRef}>
-        <div className="movies-carousel__container">
-          {slides.map((movie: Movie, index: number) => (
-            <CarouselLazyImage key={movie.id} inView={slidesInView.includes(index)} src={movie.imageUrl} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return { emblaRef, emblaApi, slidesInView };
 };

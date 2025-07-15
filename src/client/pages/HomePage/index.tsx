@@ -1,11 +1,18 @@
-import { MoviesCarousel } from '@/client/features/Movies/components/MoviesCarousel';
+import { MoviesCarousel } from '@features/Movies';
+import './home-page.scss';
 
 export const HomePage = () => {
-  console.log('HomePage rendered');
   return (
-    <section>
-      <h1>Discover Movies</h1>
-      <MoviesCarousel type="now-playing" title="Now playing" />
+    <section className="home-page">
+      <div>
+        <MoviesCarousel type="now-playing" title="Now playing" />
+      </div>
+      <div>
+        <MoviesCarousel type="popular" title="Popular" />
+      </div>
+      <div>
+        <MoviesCarousel type="top-rated" title="Top rated" />
+      </div>
     </section>
   );
 };

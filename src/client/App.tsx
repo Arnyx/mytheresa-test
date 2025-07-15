@@ -5,10 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, Suspense, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-//TODO: Change server to renderToPipeableStream, or remove lazy loading
-
 const HomePage = lazy(() => import('@/client/pages/HomePage'));
-const MoviePage = lazy(() => import('@/client/pages/MoviePage'));
+const MovieDetailsPage = lazy(() => import('@/client/pages/MovieDetailsPage'));
 const NotFoundPage = lazy(() => import('@/client/pages/NotFoundPage'));
 
 function App() {
@@ -32,7 +30,7 @@ function App() {
           <Routes>
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/" element={<HomePage />} />
-            <Route path="/details/:id" element={<MoviePage />} />
+            <Route path="/details/:id" element={<MovieDetailsPage />} />
           </Routes>
         </Suspense>
       </Container>
