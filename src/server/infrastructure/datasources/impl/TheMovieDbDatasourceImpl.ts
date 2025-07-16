@@ -1,9 +1,12 @@
 import type { Movie } from '@/server/domain/models/Movie';
-import type { TheMovieDbDatasource } from '../TheMovieDbDatasource';
-import type { HttpClient } from '../../http/HttpClient';
-import type { TheMovieDbCategoryResponse } from '../../dtos/TheMovieDbCategoryResponse';
+import type { MovieDetails } from '@/server/domain/models/MovieDetails';
 import type { GetMoviesOptions } from '@/server/domain/types/GetMoviesOptions';
-import { MovieMapper } from '../../mappers/TheMovieDbMoviesMapper';
+import type { TheMovieDbCategoryResponse } from '../../dtos/TheMovieDbCategoryResponse';
+import type { HttpClient } from '../../http/HttpClient';
+import { TheMovieDbMoviesMapper } from '../../mappers/TheMovieDbMoviesMapper';
+import type { TheMovieDbDatasource } from '../TheMovieDbDatasource';
+import { TheMovieDbMovieDetailsMapper } from '../../mappers/TheMovieDbMovieDetailsMapper';
+import type { TheMovieDbDetails } from '../../dtos/TheMovieDbDetails';
 
 export class TheMovieDbDatasourceImpl implements TheMovieDbDatasource {
   private readonly http: HttpClient;
@@ -14,16 +17,21 @@ export class TheMovieDbDatasourceImpl implements TheMovieDbDatasource {
 
   async getNowPlaying(options?: GetMoviesOptions): Promise<Array<Movie>> {
     const res = await this.http.get<TheMovieDbCategoryResponse, GetMoviesOptions>(`/movie/now_playing`, options);
-    return MovieMapper.fromDtoList(res.results);
+    return TheMovieDbMoviesMapper.fromDtoList(res.results);
   }
 
   async getPopular(options?: GetMoviesOptions): Promise<Array<Movie>> {
     const res = await this.http.get<TheMovieDbCategoryResponse, GetMoviesOptions>(`/movie/popular`, options);
-    return MovieMapper.fromDtoList(res.results);
+    return TheMovieDbMoviesMapper.fromDtoList(res.results);
   }
 
   async getTopRated(options?: GetMoviesOptions): Promise<Array<Movie>> {
     const res = await this.http.get<TheMovieDbCategoryResponse, GetMoviesOptions>(`/movie/top_rated`, options);
-    return MovieMapper.fromDtoList(res.results);
+    return TheMovieDbMoviesMapper.fromDtoList(res.results);
+  }
+
+  async getDetails(id: number): Promise<MovieDetails> {
+    const res = await this.http.get<TheMovieDbDetails, { id: number }>(`/movie/${id}`);
+    return TheMovieDbMovieDetailsMapper.toDomain(res);
   }
 }

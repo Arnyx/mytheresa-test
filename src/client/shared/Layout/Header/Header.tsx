@@ -1,13 +1,14 @@
 import logo from '@assets/logo.svg';
 import { Container } from '../Container/Container';
 import './Header.scss';
+import { Link } from 'react-router-dom';
 
 export const Header = () => (
   <header className="header">
     <Container>
-      <a aria-label="Homepage" aria-current="page" href="#" target="_self">
+      <Link to={`/`} aria-label="Homepage" aria-current="page" target="_self">
         <img src={logo} className="header__logo" alt="MyTheresa logo" />
-      </a>
+      </Link>
     </Container>
   </header>
 );

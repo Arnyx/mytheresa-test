@@ -2,6 +2,7 @@ import type { MovieRepository } from '@/server/domain/repositories/MovieReposito
 import type { TheMovieDbDatasource } from '../datasources/TheMovieDbDatasource';
 import type { Movie } from '@/server/domain/models/Movie';
 import type { GetMoviesOptions } from '@/server/domain/types/GetMoviesOptions';
+import type { MovieDetails } from '@/server/domain/models/MovieDetails';
 
 export class MovieRepositoryImpl implements MovieRepository {
   private readonly datasource: TheMovieDbDatasource;
@@ -20,5 +21,9 @@ export class MovieRepositoryImpl implements MovieRepository {
 
   async getTopRated(options?: GetMoviesOptions): Promise<Array<Movie>> {
     return this.datasource.getTopRated(options);
+  }
+
+  async getDetails(id: number): Promise<MovieDetails> {
+    return this.datasource.getDetails(id);
   }
 }

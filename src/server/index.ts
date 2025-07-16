@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import type { ViteDevServer } from 'vite';
 import { createServer as createViteServer } from 'vite';
 import moviesRoutes from './presentation/routes/movies.routes';
+import movieRoutes from './presentation/routes/movie.routes';
 
 const ABORT_DELAY = 10000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,6 +23,7 @@ async function createServer() {
   app.use(vite.middlewares);
 
   app.use('/api/movies', moviesRoutes);
+  app.use('/api/movie', movieRoutes);
 
   app.use('*all', async (req, res) => {
     try {
