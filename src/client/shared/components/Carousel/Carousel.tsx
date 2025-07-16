@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Carousel = ({ title, items, onEndReached }: Props) => {
-  const { emblaRef, slidesInView } = useEmblaCarouselController({
+  const { slidesInView, emblaRef } = useEmblaCarouselController({
     slidesLength: items.length,
     onEndReached: onEndReached ?? (() => {}),
   });

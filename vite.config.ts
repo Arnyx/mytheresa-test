@@ -24,13 +24,13 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './setupTests.ts',
-    include: ['**/__tests__/**/*.test.{ts,tsx}'],
+    setupFiles: ['./vitest.setup.ts'],
+    include: ['**/*.test.{ts,tsx}'],
     coverage: {
       reporter: ['text', 'json', 'html'],
       exclude: [
         'node_modules/',
-        'src/setupTests.ts',
+        'src/vitest.setup.ts',
         'src/main.tsx',
         'src/vite-env.d.ts',
         'src/config/theme.ts',
