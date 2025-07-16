@@ -17,7 +17,7 @@ export const MovieDetails = ({ id }: MovieDetailsProps) => {
   return (
     <section className="movie-details">
       <div className="movie-details__image-wrapper">
-        <img className="movie-details__image" src={data.imageUrl} alt={data.title} />
+        <img className="movie-details__image" src={data.backdropPath} alt={data.title} />
       </div>
       <div className="movie-details__info">
         <h1 className="movie-details__title">{data.title}</h1>
