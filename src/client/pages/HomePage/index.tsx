@@ -1,4 +1,4 @@
-import { MoviesCarousel } from '@features/Movies';
+import { MoviesCarousel, WishlistCarousel } from '@features/Movies';
 import './home-page.scss';
 
 export const HomePage = () => {
@@ -12,6 +12,9 @@ export const HomePage = () => {
       </div>
       <div>
         <MoviesCarousel type="top-rated" title="Top rated" />
+      </div>
+      <div>
+        <WishlistCarousel />
       </div>
     </section>
   );

@@ -6,7 +6,8 @@ export class TheMovieDbMoviesMapper {
     return {
       id: dto.id,
       title: dto.title,
-      imageUrl: dto.poster_path ? `https://image.tmdb.org/t/p/w500${dto.poster_path}` : '',
+      backdropPath: dto.poster_path ? `https://image.tmdb.org/t/p/w500${dto.backdrop_path}` : '',
+      posterPath: dto.poster_path ? `https://image.tmdb.org/t/p/w500${dto.poster_path}` : '',
     };
   }
 

@@ -1,5 +1,3 @@
-export type WishlistMovie = {
-  id: number;
-  title: string;
-  imageUrl: string;
-};
+import type { MovieDetails } from '@/server/domain/models/MovieDetails';
+
+export type WishlistMovie = Omit<MovieDetails, 'description'>;

@@ -1,5 +1,5 @@
-import { Container } from '@shared/Layout/Container/Container';
-import { Header } from '@shared/Layout/Header/Header';
+import { Container } from '@shared/components/Layout/Container/Container';
+import { Header } from '@shared/components/Layout/Header/Header';
 import '@styles/global.scss';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, Suspense, useState } from 'react';

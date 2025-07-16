@@ -6,7 +6,8 @@ export class MovieDetailsMapper {
     return {
       id: movie.id,
       title: movie.title,
-      imageUrl: movie.imageUrl,
+      posterPath: movie.posterPath,
+      backdropPath: movie.backdropPath,
     };
   }
 }
