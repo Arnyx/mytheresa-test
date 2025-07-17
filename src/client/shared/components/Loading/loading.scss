@@ -1,9 +1,10 @@
-/* HTML: <div class="loader"></div> */
+@use 'sass:color';
+
 .loading {
   height: 4px;
   width: 100%;
-  --background: no-repeat linear-gradient(black 0 0);
-  background: var(--background), var(--background), $gray;
+  --background: no-repeat linear-gradient(#{color.adjust($gray-light, $lightness: -10%)} 0 0);
+  background: var(--background), var(--background), $gray-light;
   background-size: 60% 100%;
   animation: progress 3s infinite;
 }

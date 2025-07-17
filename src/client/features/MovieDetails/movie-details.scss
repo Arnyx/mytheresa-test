@@ -3,7 +3,7 @@
   --button-color: #ff4d4f;
 
   display: flex;
-  gap: 2rem;
+  gap: $spacing * 4;
   font-family: var(--font-family);
   @include fadein;
 
@@ -42,7 +42,7 @@
     height: auto;
     display: block;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: $border-radius;
     opacity: 0;
     transition: opacity 0.5s ease;
 
@@ -54,7 +54,7 @@
   &__info {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: $spacing * 4;
   }
 
   &__button {
@@ -62,7 +62,7 @@
     background-color: var(--button-color);
     color: #fff;
     border: none;
-    border-radius: 6px;
+    border-radius: $border-radius;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s ease;

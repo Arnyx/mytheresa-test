@@ -15,7 +15,7 @@ $slide-height: 300px;
     height: 100%;
     background-color: $gray;
     height: $slide-height;
-    border-radius: 10px;
+    border-radius: $border-radius;
     @extend %pulse;
   }
 
@@ -23,7 +23,7 @@ $slide-height: 300px;
     font-size: 1.25rem;
     font-weight: 400;
     margin: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   &__viewport {
@@ -36,14 +36,14 @@ $slide-height: 300px;
     backface-visibility: hidden;
     display: flex;
     touch-action: pan-y pinch-zoom;
-    gap: 1rem;
+    gap: $spacing * 2;
   }
 
   &__slide {
     min-width: 0;
     flex: 0 0 $slide-size;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: $border-radius;
   }
 
   &__image {
@@ -72,10 +72,10 @@ $slide-height: 300px;
 
   &__button {
     appearance: none;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba($black, 0.5);
     touch-action: manipulation;
     pointer-events: auto;
-    color: white;
+    color: $white;
     border: none;
     width: 48px;
     height: 48px;
@@ -93,7 +93,7 @@ $slide-height: 300px;
     line-height: 1;
 
     &:not(:disabled):hover {
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba($black, 0.8);
     }
 
     &:disabled {
@@ -102,11 +102,11 @@ $slide-height: 300px;
     }
 
     &--left {
-      left: 1rem;
+      left: $spacing * 2;
     }
 
     &--right {
-      right: 1rem;
+      right: $spacing * 2;
     }
   }
 }
