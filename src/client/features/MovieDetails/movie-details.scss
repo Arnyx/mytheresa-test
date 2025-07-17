@@ -1,6 +1,32 @@
 .movie-details {
+  --font-family: inherit;
+  --button-color: #ff4d4f;
+
   display: flex;
   gap: 2rem;
+  font-family: var(--font-family);
+  @include fadein;
+
+  &--now-playing {
+    --font-family: 'Courier New', Courier, monospace;
+    --button-color: #ff4d4f;
+    --button-color-hover: #e04345;
+    --button-color-active: #c43b3d;
+  }
+
+  &--popular {
+    --font-family: 'Segoe UI', Tahoma, sans-serif;
+    --button-color: #1e90ff;
+    --button-color-hover: #1c86ee;
+    --button-color-active: #1874cd;
+  }
+
+  &--top-rated {
+    --font-family: 'Georgia', serif;
+    --button-color: #2ecc71;
+    --button-color-hover: #27ae60;
+    --button-color-active: #1e8449;
+  }
 
   &__title,
   &__description {
@@ -17,6 +43,12 @@
     display: block;
     object-fit: cover;
     border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+
+    &--loaded {
+      opacity: 1;
+    }
   }
 
   &__info {
@@ -27,7 +59,7 @@
 
   &__button {
     padding: 1rem 1.5rem;
-    background-color: #ff4d4f;
+    background-color: var(--button-color);
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -37,11 +69,11 @@
 
     &:hover,
     &:focus {
-      background-color: #e04345;
+      background-color: var(--button-color-hover);
     }
 
     &:active {
-      background-color: #c43b3d;
+      background-color: var(--button-color-active);
     }
   }
 }

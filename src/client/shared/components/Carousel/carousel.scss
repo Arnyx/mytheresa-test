@@ -3,9 +3,17 @@ $slide-size: calc(100% / 6);
 .movies-carousel {
   max-width: 100%;
   user-select: none;
+  @include fadein;
 
   &__wrapper {
     position: relative;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+    margin-bottom: 2rem;
   }
 
   &__viewport {
