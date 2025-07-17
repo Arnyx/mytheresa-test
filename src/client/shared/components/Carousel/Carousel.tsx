@@ -30,7 +30,12 @@ const Carousel = ({ title, items, onEndReached }: Props) => {
         <div className="movies-carousel__viewport" ref={emblaRef}>
           <div className="movies-carousel__container">
             {items.map((movie, index) => (
-              <Link to={`/details/${movie.id}`} key={movie.id} className="movies-carousel__slide">
+              <Link
+                to={`/details/${movie.id}`}
+                key={movie.id}
+                className="movies-carousel__slide"
+                aria-label={movie.title}
+              >
                 <CarouselLazyImage inView={slidesInView.has(index)} src={movie.posterPath} title={movie.title} />
               </Link>
             ))}
