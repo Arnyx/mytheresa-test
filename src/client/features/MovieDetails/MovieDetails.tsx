@@ -1,7 +1,7 @@
-import { useWishlist } from '@/client/shared/hooks/useWishlist';
+import { useWishlist } from '@shared/hooks/useWishlist';
 import { useMovieDetails } from './hooks/useMovieDetails';
 import './movie-details.scss';
-import type { MovieType } from '@/client/shared/types/MovieType';
+import type { MovieType } from '@shared/types/MovieType';
 import { useState } from 'react';
 
 type MovieDetailsProps = {
