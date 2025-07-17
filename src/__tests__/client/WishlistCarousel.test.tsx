@@ -4,7 +4,6 @@ import LocalStorageService from '@/client/shared/services/LocalStorageService';
 import type { WishlistMovie } from '@/client/shared/types/WishListMove';
 import { renderWithProviders } from '@/test-utils/renderWithProviders';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 const wishlistedMovie: [[number, WishlistMovie]] = [
   [
@@ -23,7 +22,6 @@ describe('<WishListCarousel />', () => {
     LocalStorageService.set(WISHLIST_KEY, wishlistedMovie);
 
     renderWithProviders(<WishlistCarousel />);
-    userEvent.setup();
 
     const movie = screen.getByRole('link', { name: 'Shadow of the Phoenix' });
     expect(movie).toBeInTheDocument();

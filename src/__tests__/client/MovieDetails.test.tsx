@@ -22,16 +22,16 @@ describe('<MovieDetails />', () => {
 
   test('should toggle movie to wishlist', async () => {
     renderWithProviders(<MovieDetails id={123} />);
-    userEvent.setup();
+    const user = userEvent.setup();
 
     const addToWishlist = await screen.findByRole('button', { name: 'Add to Wishlist' });
-    await userEvent.click(addToWishlist);
+    await user.click(addToWishlist);
 
     const wishlistItems = LocalStorageService.get<[number, WishlistMovie][]>(WISHLIST_KEY);
     expect(wishlistItems?.[0][0]).toBe(123);
 
     const removeFromWishlist = await screen.findByRole('button', { name: 'Remove from Wishlist' });
-    await userEvent.click(removeFromWishlist);
+    await user.click(removeFromWishlist);
 
     const emptyWishlistItems = LocalStorageService.get<[number, WishlistMovie][]>(WISHLIST_KEY);
 

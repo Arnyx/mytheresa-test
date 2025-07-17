@@ -37,7 +37,7 @@ describe('<MovieDetails />', () => {
   test('should fetch movies based on page', async () => {
     //TODO: Check onscroll event firing twice
     renderWithProviders(<MoviesCarousel type="now-playing" title="Now playing" />);
-    userEvent.setup();
+    const user = userEvent.setup();
 
     const title = await screen.findByRole('heading', { name: 'Now playing' });
     expect(title).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe('<MovieDetails />', () => {
     expect(movie).toBeInTheDocument();
 
     const rightScrollButton = screen.getByRole('button', { name: 'Scroll Right' });
-    await userEvent.click(rightScrollButton);
+    await user.click(rightScrollButton);
 
     act(() => scrollHandler!());
 
@@ -62,12 +62,12 @@ describe('<MovieDetails />', () => {
       </>
     );
 
-    userEvent.setup();
+    const user = userEvent.setup();
 
     const movie = await screen.findByRole('link', { name: 'The Last Shadow' });
     expect(movie).toBeInTheDocument();
 
-    await userEvent.click(movie);
+    await user.click(movie);
 
     const path = screen.getByTestId('current-path');
     expect(path).toHaveTextContent('/details/1');
