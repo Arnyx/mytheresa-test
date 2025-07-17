@@ -1,4 +1,5 @@
 import { MoviesCarousel } from '@/client/features/Movies';
+import { CurrentPath } from '@/test-utils/CurrentPath';
 import { renderWithProviders } from '@/test-utils/renderWithProviders';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -32,23 +33,43 @@ vi.mock('embla-carousel-react', async () => {
   };
 });
 
-test('should fetch movies based on page', async () => {
-  //TODO: Check onscroll event firing twice
-  renderWithProviders(<MoviesCarousel type="now-playing" title="Now playing" />);
+describe('<MovieDetails />', () => {
+  test('should fetch movies based on page', async () => {
+    //TODO: Check onscroll event firing twice
+    renderWithProviders(<MoviesCarousel type="now-playing" title="Now playing" />);
+    userEvent.setup();
 
-  userEvent.setup();
+    const title = await screen.findByRole('heading', { name: 'Now playing' });
+    expect(title).toBeInTheDocument();
 
-  const title = await screen.findByRole('heading', { name: 'Now playing' });
-  expect(title).toBeInTheDocument();
+    const movie = screen.getByRole('link', { name: 'The Last Shadow' });
+    expect(movie).toBeInTheDocument();
 
-  const movie = screen.getByRole('link', { name: 'The Last Shadow' });
-  expect(movie).toBeInTheDocument();
+    const rightScrollButton = screen.getByRole('button', { name: 'Scroll Right' });
+    await userEvent.click(rightScrollButton);
 
-  const rightScrollButton = screen.getByRole('button', { name: 'Scroll Right' });
-  await userEvent.click(rightScrollButton);
+    act(() => scrollHandler!());
 
-  act(() => scrollHandler!());
+    const newMovie = await screen.findByRole('link', { name: 'Broken Chains' });
+    expect(newMovie).toBeInTheDocument();
+  });
 
-  const newMovie = await screen.findByRole('link', { name: 'Broken Chains' });
-  expect(newMovie).toBeInTheDocument();
+  test('should redirect to details page', async () => {
+    renderWithProviders(
+      <>
+        <MoviesCarousel type="now-playing" title="Now playing" />
+        <CurrentPath />
+      </>
+    );
+
+    userEvent.setup();
+
+    const movie = await screen.findByRole('link', { name: 'The Last Shadow' });
+    expect(movie).toBeInTheDocument();
+
+    await userEvent.click(movie);
+
+    const path = screen.getByTestId('current-path');
+    expect(path).toHaveTextContent('/details/1');
+  });
 });

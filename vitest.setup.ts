@@ -3,6 +3,7 @@ import { cleanup } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll, expect } from 'vitest';
 import { server } from './src/test-utils/setup/msw';
 import './src/test-utils/setup/polyfills';
+import './src/test-utils/mocks/localStorage';
 
 beforeAll(() => server.listen());
 afterEach(() => {

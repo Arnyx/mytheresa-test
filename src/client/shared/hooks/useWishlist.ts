@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import LocalStorageService from '../services/LocalStorageService';
 import type { WishlistMovie } from '../types/WishListMove';
 
-const WISHLIST_KEY = 'mytheresa-test:wishlist';
+export const WISHLIST_KEY = 'mytheresa-test:wishlist';
 
 export const useWishlist = () => {
   const [wishlistMap, setWishlistMap] = useState<Map<number, WishlistMovie>>(new Map());
