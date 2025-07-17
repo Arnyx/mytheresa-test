@@ -1,9 +1,9 @@
 import logo from '@assets/logo.svg';
-import { Container } from '../Container/Container';
+import Container from '../Container/Container';
 import './Header.scss';
 import { Link } from 'react-router-dom';
 
-export const Header = () => (
+const Header = () => (
   <header className="header">
     <Container>
       <Link to={`/`} aria-label="Homepage" aria-current="page" target="_self">
@@ -12,3 +12,5 @@ export const Header = () => (
     </Container>
   </header>
 );
+
+export default Header;

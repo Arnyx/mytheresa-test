@@ -1,7 +1,7 @@
 import type { Movie } from '@/server/domain/models/Movie';
 import type { MovieType } from '../../types/MovieType';
 import './carousel.scss';
-import { CarouselBody } from './CarouselBody';
+import CarouselBody from './CarouselBody';
 import { useEmblaCarouselController } from './useCarouselController';
 
 interface Props {

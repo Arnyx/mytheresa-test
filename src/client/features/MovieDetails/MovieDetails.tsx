@@ -9,7 +9,7 @@ type MovieDetailsProps = {
   type?: MovieType;
 };
 
-export const MovieDetails = ({ id, type }: MovieDetailsProps) => {
+const MovieDetails = ({ id, type }: MovieDetailsProps) => {
   const { data } = useMovieDetails(id);
   const { isInWishlist, toggleWishlist } = useWishlist();
   const wishlisted = isInWishlist(id);
@@ -45,3 +45,5 @@ export const MovieDetails = ({ id, type }: MovieDetailsProps) => {
     </section>
   );
 };
+
+export default MovieDetails;

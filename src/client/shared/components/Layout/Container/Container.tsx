@@ -1,4 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import './Container.scss';
 
-export const Container = ({ children }: PropsWithChildren) => <div className="container">{children}</div>;
+const Container = ({ children }: PropsWithChildren) => <div className="container">{children}</div>;
+
+export default Container;

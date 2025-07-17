@@ -11,7 +11,7 @@ type CarouselBodyProps = ReturnType<typeof useEmblaCarouselController> & {
   type?: MovieType;
 };
 
-export const CarouselBody: React.FC<CarouselBodyProps> = ({ items, type, emblaApi, slidesInView, emblaRef }) => {
+const CarouselBody = ({ items, type, emblaApi, slidesInView, emblaRef }: CarouselBodyProps) => {
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = useScrollButtons(emblaApi);
 
   return (
@@ -35,3 +35,5 @@ export const CarouselBody: React.FC<CarouselBodyProps> = ({ items, type, emblaAp
     </>
   );
 };
+
+export default CarouselBody;

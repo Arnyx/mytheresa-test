@@ -1,4 +1,4 @@
-import { MovieDetails } from '@/client/features/MovieDetails/MovieDetails';
+import MovieDetails from '@/client/features/MovieDetails/MovieDetails';
 import type { MovieType } from '@/client/shared/types/MovieType';
 import { safeParseInt } from '@/server/presentation/helpers';
 import { useParams, useSearchParams } from 'react-router-dom';
