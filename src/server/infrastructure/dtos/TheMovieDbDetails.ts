@@ -1,7 +1,7 @@
 export interface TheMovieDbDetails {
   adult: boolean;
   backdrop_path: string;
-  belongs_to_collection?: BelongsToCollection;
+  belongs_to_collection: BelongsToCollection | null;
   budget: number;
   genres: Genre[];
   homepage: string;

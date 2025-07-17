@@ -4,6 +4,10 @@ $slide-size: calc(100% / 6);
   max-width: 100%;
   user-select: none;
 
+  &__wrapper {
+    position: relative;
+  }
+
   &__viewport {
     overflow: hidden;
   }
@@ -45,6 +49,46 @@ $slide-size: calc(100% / 6);
 
     &:not(&--has-loaded) {
       @extend %pulse;
+    }
+  }
+
+  &__button {
+    appearance: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    touch-action: manipulation;
+    pointer-events: auto;
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+
+    &:not(:disabled):hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    &--left {
+      left: 1rem;
+    }
+
+    &--right {
+      right: 1rem;
     }
   }
 }

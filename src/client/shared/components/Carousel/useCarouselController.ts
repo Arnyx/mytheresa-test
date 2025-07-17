@@ -1,10 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { EmblaCarouselType, EngineType } from 'embla-carousel';
+import type { EmblaCarouselType, EmblaOptionsType, EngineType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 
 type Props = {
   slidesLength: number;
   onEndReached: () => void;
+};
+
+const EMBLA_OPTIONS: EmblaOptionsType = {
+  dragFree: true,
+  containScroll: 'keepSnaps',
+  watchResize: false,
+  slidesToScroll: 5,
 };
 
 const COPY_ENGINE_MODULES_ON_RELOAD: (keyof EngineType)[] = [
@@ -23,9 +30,7 @@ export const useEmblaCarouselController = ({ slidesLength, onEndReached }: Props
   const hasLoaded = useRef(false);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    dragFree: true,
-    containScroll: 'keepSnaps',
-    watchResize: false,
+    ...EMBLA_OPTIONS,
     watchSlides: (emblaApi) => {
       const reloadEmbla = (): void => {
         const oldEngine = emblaApi.internalEngine();
