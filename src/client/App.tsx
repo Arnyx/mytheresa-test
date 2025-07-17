@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, Suspense, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Main } from '@shared/components/Layout/Main/Main';
+import Loading from './shared/components/Loading/Loading';
 
 const HomePage = lazy(() => import('@/client/pages/HomePage'));
 const MovieDetailsPage = lazy(() => import('@/client/pages/MovieDetailsPage'));
@@ -28,7 +29,7 @@ function App() {
       <Main>
         <Header />
         <Container>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/" element={<HomePage />} />

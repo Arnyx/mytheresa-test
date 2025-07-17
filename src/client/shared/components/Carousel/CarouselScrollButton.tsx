@@ -1,5 +1,4 @@
 import type { ButtonHTMLAttributes } from 'react';
-import './carousel.scss';
 
 interface CarouselScrollButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   direction: 'left' | 'right';
