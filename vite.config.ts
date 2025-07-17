@@ -29,6 +29,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'json', 'html'],
       exclude: [
+        'dist/',
         'node_modules/',
         'src/vitest.setup.ts',
         'src/main.tsx',
