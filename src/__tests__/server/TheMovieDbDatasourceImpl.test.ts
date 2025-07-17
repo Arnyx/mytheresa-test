@@ -2,7 +2,7 @@ import { createMovieRepository } from '@/server/infrastructure/factories/movieRe
 import movies from '@/test-utils/mocks/handlers/movies/movies-page-1.json';
 import movieDetails from '@/test-utils/mocks/handlers/movie/movie.json';
 
-describe('TheMovieDbDatasourceImpl.test', () => {
+describe('TheMovieDbDatasourceImpl', () => {
   const datasource = createMovieRepository();
 
   it('returns now playing movies', async () => {
