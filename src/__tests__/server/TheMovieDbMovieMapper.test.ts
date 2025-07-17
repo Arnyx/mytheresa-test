@@ -26,7 +26,7 @@ describe('TheMovieDbMovieMapper', () => {
   const mockDomain: Movie = {
     id: 1087192,
     title: 'How to Train Your Dragon',
-    backdropPath: 'https://image.tmdb.org/t/p/w500/ovZasZ9EeZcp6UsrElkQ63hFCd.jpg',
+    backdropPath: 'https://image.tmdb.org/t/p/w780/ovZasZ9EeZcp6UsrElkQ63hFCd.jpg',
     posterPath: 'https://image.tmdb.org/t/p/w500/q5pXRYTycaeW6dEgsCrd4mYPmxM.jpg',
   };
 
