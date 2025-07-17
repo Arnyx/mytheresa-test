@@ -7,16 +7,22 @@ import { useScrollButtons } from './useScrollButtons';
 import type { MovieType } from '../../types/MovieType';
 
 type CarouselBodyProps = ReturnType<typeof useEmblaCarouselController> & {
+  carouselId: string;
   items: Array<Movie>;
   type?: MovieType;
 };
 
-const CarouselBody = ({ items, type, emblaApi, slidesInView, emblaRef }: CarouselBodyProps) => {
+const CarouselBody = ({ items, type, emblaApi, slidesInView, carouselId, emblaRef }: CarouselBodyProps) => {
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = useScrollButtons(emblaApi);
 
   return (
     <>
-      <CarouselScrollButton direction="left" onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+      <CarouselScrollButton
+        direction="left"
+        onClick={onPrevButtonClick}
+        disabled={prevBtnDisabled}
+        carouselId={carouselId}
+      />
       <div className="movies-carousel__viewport" ref={emblaRef}>
         <div className="movies-carousel__container">
           {items.map((movie, index) => (
@@ -31,7 +37,12 @@ const CarouselBody = ({ items, type, emblaApi, slidesInView, emblaRef }: Carouse
           ))}
         </div>
       </div>
-      <CarouselScrollButton direction="right" onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+      <CarouselScrollButton
+        direction="right"
+        onClick={onNextButtonClick}
+        disabled={nextBtnDisabled}
+        carouselId={carouselId}
+      />
     </>
   );
 };

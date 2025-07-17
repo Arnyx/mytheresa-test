@@ -16,13 +16,16 @@ const Carousel = ({ title, items, type, onEndReached }: Props) => {
     slidesLength: items.length,
     onEndReached: onEndReached ?? (() => {}),
   });
+  const carouselId = `carousel-title${type ? `-${type}` : ''}`;
 
   return (
-    <section className="movies-carousel">
-      <h1 className="movies-carousel__title">{title}</h1>
+    <section className="movies-carousel" aria-labelledby={carouselId}>
+      <h1 className="movies-carousel__title" id={carouselId}>
+        {title}
+      </h1>
       <div className="movies-carousel__wrapper">
         {items.length ? (
-          <CarouselBody {...emblaControllerProps} items={items} type={type} />
+          <CarouselBody {...emblaControllerProps} items={items} type={type} carouselId={carouselId} />
         ) : (
           <div className="movies-carousel__loading-placeholder" />
         )}

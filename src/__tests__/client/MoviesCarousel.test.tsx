@@ -35,7 +35,6 @@ vi.mock('embla-carousel-react', async () => {
 
 describe('<MovieDetails />', () => {
   test('should fetch movies based on page', async () => {
-    //TODO: Check onscroll event firing twice
     renderWithProviders(<MoviesCarousel type="now-playing" title="Now playing" />);
     const user = userEvent.setup();
 
