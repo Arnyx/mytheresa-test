@@ -24,18 +24,15 @@ const CarouselBody = ({ items, type, emblaApi, slidesInView, carouselId, emblaRe
         carouselId={carouselId}
       />
       <div className="movies-carousel__viewport" ref={emblaRef}>
-        <div className="movies-carousel__container">
+        <ul className="movies-carousel__list">
           {items.map((movie, index) => (
-            <Link
-              to={`/details/${movie.id}?type=${type ?? ''}`}
-              key={movie.id}
-              className="movies-carousel__slide"
-              aria-label={movie.title}
-            >
-              <CarouselLazyImage inView={slidesInView.has(index)} src={movie.posterPath} title={movie.title} />
-            </Link>
+            <li className="movies-carousel__slide" key={movie.id}>
+              <Link to={`/details/${movie.id}?type=${type ?? ''}`} aria-label={movie.title}>
+                <CarouselLazyImage inView={slidesInView.has(index)} src={movie.posterPath} title={movie.title} />
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
       <CarouselScrollButton
         direction="right"
