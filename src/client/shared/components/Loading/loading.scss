@@ -1,26 +1,27 @@
+/* HTML: <div class="loader"></div> */
 .loading {
+  height: 4px;
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &__spinner {
-    width: 50px;
-    aspect-ratio: 1;
-    --background: no-repeat radial-gradient(farthest-side, #000000 92%, #0000);
-    background:
-      var(--background) top,
-      var(--background) left,
-      var(--background) right,
-      var(--background) bottom;
-    background-size: 12px 12px;
-    animation: rotate 1s infinite;
-  }
+  --background: no-repeat linear-gradient(black 0 0);
+  background: var(--background), var(--background), $gray;
+  background-size: 60% 100%;
+  animation: progress 3s infinite;
 }
 
-@keyframes rotate {
-  to {
-    transform: rotate(0.5turn);
+@keyframes progress {
+  0% {
+    background-position:
+      -150% 0,
+      -150% 0;
+  }
+  66% {
+    background-position:
+      250% 0,
+      -150% 0;
+  }
+  100% {
+    background-position:
+      250% 0,
+      250% 0;
   }
 }
