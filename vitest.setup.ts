@@ -4,6 +4,7 @@ import { afterAll, afterEach, beforeAll, expect } from 'vitest';
 import { server } from './src/test-utils/setup/msw';
 import './src/test-utils/setup/polyfills';
 import './src/test-utils/mocks/localStorage';
+import './src/test-utils/setup/mocks';
 
 beforeAll(() => server.listen());
 afterEach(() => {

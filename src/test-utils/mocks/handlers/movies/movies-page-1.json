@@ -2,61 +2,61 @@
   {
     "id": 1,
     "title": "The Last Shadow",
-    "backdropPath": "https://example.com/backdrops/last-shadow.jpg",
-    "posterPath": "https://example.com/posters/last-shadow.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/last-shadow.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/last-shadow.jpg"
   },
   {
     "id": 2,
     "title": "Dream Chasers",
-    "backdropPath": "https://example.com/backdrops/dream-chasers.jpg",
-    "posterPath": "https://example.com/posters/dream-chasers.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/dream-chasers.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/dream-chasers.jpg"
   },
   {
     "id": 3,
     "title": "Silent Horizon",
-    "backdropPath": "https://example.com/backdrops/silent-horizon.jpg",
-    "posterPath": "https://example.com/posters/silent-horizon.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/silent-horizon.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/silent-horizon.jpg"
   },
   {
     "id": 4,
     "title": "Crimson Sky",
-    "backdropPath": "https://example.com/backdrops/crimson-sky.jpg",
-    "posterPath": "https://example.com/posters/crimson-sky.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/crimson-sky.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/crimson-sky.jpg"
   },
   {
     "id": 5,
     "title": "Echoes of Tomorrow",
-    "backdropPath": "https://example.com/backdrops/echoes-tomorrow.jpg",
-    "posterPath": "https://example.com/posters/echoes-tomorrow.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/echoes-tomorrow.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/echoes-tomorrow.jpg"
   },
   {
     "id": 6,
     "title": "Beyond the Veil",
-    "backdropPath": "https://example.com/backdrops/beyond-veil.jpg",
-    "posterPath": "https://example.com/posters/beyond-veil.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/beyond-veil.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/beyond-veil.jpg"
   },
   {
     "id": 7,
     "title": "Neon Mirage",
-    "backdropPath": "https://example.com/backdrops/neon-mirage.jpg",
-    "posterPath": "https://example.com/posters/neon-mirage.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/neon-mirage.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/neon-mirage.jpg"
   },
   {
     "id": 8,
     "title": "The Lost Beacon",
-    "backdropPath": "https://example.com/backdrops/lost-beacon.jpg",
-    "posterPath": "https://example.com/posters/lost-beacon.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/lost-beacon.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/lost-beacon.jpg"
   },
   {
     "id": 9,
     "title": "Shattered Realm",
-    "backdropPath": "https://example.com/backdrops/shattered-realm.jpg",
-    "posterPath": "https://example.com/posters/shattered-realm.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/shattered-realm.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/shattered-realm.jpg"
   },
   {
     "id": 10,
     "title": "Aurora Rising",
-    "backdropPath": "https://example.com/backdrops/aurora-rising.jpg",
-    "posterPath": "https://example.com/posters/aurora-rising.jpg"
+    "backdropPath": "https://image.tmdb.org/t/p/w500/aurora-rising.jpg",
+    "posterPath": "https://image.tmdb.org/t/p/w500/aurora-rising.jpg"
   }
 ]

@@ -1,7 +1,7 @@
 {
   "id": 123,
-  "title": "Shadow of the Phoenix",
-  "description": "Shadow of the Phoenix description.",
-  "backdropPath": "https://example.com/backdrops/fake-backdrop-shadow-phoenix.jpg",
-  "posterPath": "https://example.com/poster/fake-poster-shadow-phoenix.jpg"
+  "title": "The Lord of the Rings",
+  "description": "The Fellowship of the Ring embark on a journey to destroy the One Ring and end Sauron's reign over Middle-earth.",
+  "backdropPath": "https://image.tmdb.org/t/p/w500/TXSxV23MWYkezZ3219gtgcSX6n.jpg",
+  "posterPath": "https://image.tmdb.org/t/p/w500/liW0mjvTyLs7UCumaHhx3PpU4VT.jpg"
 }
