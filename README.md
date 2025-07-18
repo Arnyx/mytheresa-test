@@ -1,69 +1,121 @@
-# React + TypeScript + Vite
+# 🎬 Mytheresa - Frontend Engineer Technical Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Movie browsing application with dynamic carousels, movie detail pages, and wishlist functionality. Developed using React, Vite, Express (for SSR), and SCSS.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📖 Technical Description
 
-## Expanding the ESLint configuration
+### ✅ Main Features:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ✅ Homepage with **3 carousels** and a wishlish section:
+  - Now Playing
+  - Popular
+  - Top Rated
+  - Wishlisted movies
+- ✅ Movie Details Page:
+  - Image, description, and **wishlist button**
+  - Dynamic styling by category (font + button style)
+- ✅ Toggle between **TMDB API** or **local mock data** using `DATASOURCE` in `.env`
+- ✅ **SSR** (Server-Side Rendering) with Vite + Express
+- ✅ **Tests** implemented with Vitest
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 📂 Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```
+src/
+  client/
+    App.tsx
+    features/
+      Movies/           # Category carousels and wishlist
+      MovieDetails/     # Movie details
+    pages/
+      HomePage/         # Home with 3 carousels and wishlist
+      MovieDetailsPage/ # Movie details page with image, description, and wishlist button
+    shared/
+      components/       # Reusable UI components (Carousel, Layout, Loading)
+      hooks/            # Shared hooks
+      services/         # Client-side utilities
+  server/
+    config/             # env variables setup
+    domain/
+      models/           # Core domain models (Movie, MovieDetails)
+      datasources/      # Abstract datasource interfaces
+      repositories/     # Abstract repository interfaces
+      use-cases/        # Application logic (Getters)
+    infrastructure/
+      datasources/      # Datasource implementations (TMDB, Local)
+      dtos/             # Data Transfer Objects from APIs
+      factories/        # Repository factory
+      mappers/          # DTO <-> Domain model transformations
+      repositories/     # Repository implementations
+    presentation/
+      controllers/      # Handles SSR logic, invokes use-cases
+      routes/           # Express routes for SSR and APIs
+    index.tsx           # Express + Vite server entry point implementing SSR with streaming.
+  entry-client.tsx      # Client entry point
+  entry-server.tsx      # Server-side entry point
+vite.config.ts          # Vite configuration
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+## ⚙️ Installation & Execution
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+⚠️ **Important:** Copy the content of `.env.template` to `.env` and update it with:
+
+- Your TMDB API key (if you want to work with TheMovieDb datasource)
+- The `DATASOURCE` variable:
+  - `TMDB` → Fetch movies from TheMovieDB API
+  - `LOCAL` → Use local mock data
+
+```bash
+# Install dependencies
+npm install
+
+# Run locally
+npm run dev
+
+# Run tests
+npm run test
+
+# View test coverage
+npm run test:coverage
 ```
+
+---
+
+## 🔍 Technical Decisions
+
+- **Clean Architecture on the backed**:
+  - Separation of concerns between `domain`, `infrastructure`, and `presentation`.
+  - Use of **Factories** for dynamic datasource selection (`TMDB` or `LOCAL`).
+- **Screaming Architecture on the frontend**:
+  - Organizes code by **features** instead of technical layers for better maintainability.
+  - Groups related components, hooks, and styles under the same feature folder (e.g., `Movies`, `MovieDetails`).
+- **SSR with streaming**: Implemented with React 18 + Vite middleware.
+- **Styling**: SCSS for flexibility and BEM methodology.
+
+---
+
+## ✅ Future Improvements
+
+- Add more integration tests.
+- Improve accessibility (ARIA labels, keyboard navigation).
+- Add more info to the details page.
+- Improve overall look and feel.
+
+---
+
+## Screenshots
+
+![Home preview](./public/screenshot-1.jpg)
+![Details preview](./public/screenshot-2.jpg)
+
+---
+
+## 👨‍💻 Author
+
+> Technical challenge developed by **Arnau Folch** as part of the selection process for Mytheresa.
