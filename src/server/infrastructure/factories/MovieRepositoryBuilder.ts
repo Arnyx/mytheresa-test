@@ -8,22 +8,18 @@ import type { MoviesDatasource } from '../datasources/MoviesDatasource';
 export class MovieRepositoryBuilder {
   private datasource: MoviesDatasource | null = null;
 
-  static create(): MovieRepositoryBuilder {
-    return new MovieRepositoryBuilder();
-  }
-
-  withLocalDatasource(): MovieRepositoryBuilder {
+  withLocalDatasource(): this {
     this.datasource = new LocalDatasource();
     return this;
   }
 
-  withTheMovieDbDatasource(): MovieRepositoryBuilder {
+  withTheMovieDbDatasource(): this {
     const api = new HttpClient(env.TMDB_BASE_URL, env.TMDB_ACCESS_TOKEN);
     this.datasource = new TheMovieDbDatasourceImpl(api);
     return this;
   }
 
-  withCustomDatasource(datasource: MoviesDatasource): MovieRepositoryBuilder {
+  withCustomDatasource(datasource: MoviesDatasource): this {
     this.datasource = datasource;
     return this;
   }
