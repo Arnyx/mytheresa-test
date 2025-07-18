@@ -4,11 +4,11 @@ import type { GetMoviesOptions } from '@/server/domain/types/GetMoviesOptions';
 import type { TheMovieDbCategoryResponse } from '../../dtos/TheMovieDbCategoryResponse';
 import type { HttpClient } from '../../http/HttpClient';
 import { TheMovieDbMoviesMapper } from '../../mappers/TheMovieDbMoviesMapper';
-import type { TheMovieDbDatasource } from '../TheMovieDbDatasource';
+import type { MoviesDatasource } from '../MoviesDatasource';
 import { TheMovieDbMovieDetailsMapper } from '../../mappers/TheMovieDbMovieDetailsMapper';
 import type { TheMovieDbDetails } from '../../dtos/TheMovieDbDetails';
 
-export class TheMovieDbDatasourceImpl implements TheMovieDbDatasource {
+export class TheMovieDbDatasourceImpl implements MoviesDatasource {
   private readonly http: HttpClient;
 
   constructor(http: HttpClient) {
