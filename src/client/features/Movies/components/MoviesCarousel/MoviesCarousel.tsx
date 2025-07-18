@@ -11,7 +11,7 @@ interface Props {
 const MoviesCarousel = ({ type, title }: Props) => {
   const { slides, incrementPage } = useInfiniteMovies(type);
 
-  return <Carousel title={title} items={slides} onEndReached={incrementPage} />;
+  return <Carousel title={title} items={slides} type={type} onEndReached={incrementPage} />;
 };
 
 export default MoviesCarousel;

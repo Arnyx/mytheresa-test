@@ -1,47 +1,33 @@
 import type { Movie } from '@/server/domain/models/Movie';
+import type { MovieType } from '../../types/MovieType';
 import './carousel.scss';
+import CarouselBody from './CarouselBody';
 import { useEmblaCarouselController } from './useCarouselController';
-import { Link } from 'react-router-dom';
-import { CarouselLazyImage } from './CarouselLazyImage';
-import { useScrollButtons } from './useScrollButtons';
-import { CarouselScrollButton } from './CarouselScrollButton';
 
 interface Props {
   title: string;
   items: Movie[];
+  type?: MovieType;
   onEndReached?: () => void;
 }
 
-const Carousel = ({ title, items, onEndReached }: Props) => {
-  const { emblaApi, slidesInView, emblaRef } = useEmblaCarouselController({
-    slidesLength: items.length,
+const Carousel = ({ title, items, type, onEndReached }: Props) => {
+  const emblaControllerProps = useEmblaCarouselController({
     onEndReached: onEndReached ?? (() => {}),
   });
-
-  const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = useScrollButtons(emblaApi);
-
-  if (!items.length) return null;
+  const carouselId = `carousel-title${type ? `-${type}` : ''}`;
 
   return (
-    <section className="movies-carousel">
-      <h1>{title}</h1>
+    <section className="movies-carousel" aria-labelledby={carouselId}>
+      <h1 className="movies-carousel__title" id={carouselId}>
+        {title}
+      </h1>
       <div className="movies-carousel__wrapper">
-        <CarouselScrollButton direction="left" onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-        <div className="movies-carousel__viewport" ref={emblaRef}>
-          <div className="movies-carousel__container">
-            {items.map((movie, index) => (
-              <Link
-                to={`/details/${movie.id}`}
-                key={movie.id}
-                className="movies-carousel__slide"
-                aria-label={movie.title}
-              >
-                <CarouselLazyImage inView={slidesInView.has(index)} src={movie.posterPath} title={movie.title} />
-              </Link>
-            ))}
-          </div>
-        </div>
-        <CarouselScrollButton direction="right" onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+        {items.length ? (
+          <CarouselBody {...emblaControllerProps} items={items} type={type} carouselId={carouselId} />
+        ) : (
+          <div className="movies-carousel__loading-placeholder" />
+        )}
       </div>
     </section>
   );

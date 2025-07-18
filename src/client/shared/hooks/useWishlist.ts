@@ -1,4 +1,4 @@
-import { MovieDetailsMapper } from '@/client/features/MovieDetails/mappers/MovieDetailsMapper';
+import { MovieDetailsMapper } from '@features/MovieDetails/mappers/MovieDetailsMapper';
 import type { MovieDetails } from '@/server/domain/models/MovieDetails';
 import { useEffect, useState } from 'react';
 import LocalStorageService from '../services/LocalStorageService';

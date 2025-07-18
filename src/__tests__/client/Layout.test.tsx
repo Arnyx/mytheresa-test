@@ -1,4 +1,4 @@
-import { Header } from '@/client/shared/components/Layout/Header/Header';
+import Header from '@/client/shared/components/Layout/Header/Header';
 import { CurrentPath } from '@/test-utils/CurrentPath';
 import { renderWithProviders } from '@/test-utils/renderWithProviders';
 import { screen, within } from '@testing-library/react';

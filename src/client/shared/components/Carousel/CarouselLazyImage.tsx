@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import './carousel.scss';
 
 interface Props {
   inView: boolean;

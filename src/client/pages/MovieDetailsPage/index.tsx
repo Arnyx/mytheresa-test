@@ -1,16 +1,20 @@
-import { MovieDetails } from '@/client/features/MovieDetails/MovieDetails';
+import MovieDetails from '@features/MovieDetails/MovieDetails';
+import type { MovieType } from '@shared/types/MovieType';
 import { safeParseInt } from '@/server/presentation/helpers';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const MovieDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
-  const movieId = safeParseInt(id);
+  const [searchParams] = useSearchParams();
 
-  if (movieId <= 0) {
-    return <h1>Invalid Movie ID</h1>;
+  const movieId = safeParseInt(id);
+  const type = searchParams.get('type') as MovieType;
+
+  if (!movieId || movieId <= 0) {
+    return <>Invalid Movie ID</>;
   }
 
-  return <MovieDetails id={movieId} />;
+  return <MovieDetails id={movieId} type={type} />;
 };
 
 export default MovieDetailsPage;

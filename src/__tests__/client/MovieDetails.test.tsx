@@ -1,4 +1,4 @@
-import { MovieDetails } from '@/client/features/MovieDetails/MovieDetails';
+import MovieDetails from '@/client/features/MovieDetails/MovieDetails';
 import { renderWithProviders } from '@/test-utils/renderWithProviders';
 import { screen } from '@testing-library/react';
 import movieJson from '@/test-utils/mocks/handlers/movie/movie.json';

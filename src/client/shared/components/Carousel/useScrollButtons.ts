@@ -10,14 +10,16 @@ export const useScrollButtons = (
 
   const onPrevButtonClick = useCallback(() => {
     if (!emblaApi) return;
+
     emblaApi.scrollPrev();
-    if (onButtonClick) onButtonClick(emblaApi);
+    onButtonClick?.(emblaApi);
   }, [emblaApi, onButtonClick]);
 
   const onNextButtonClick = useCallback(() => {
     if (!emblaApi) return;
+
     emblaApi.scrollNext();
-    if (onButtonClick) onButtonClick(emblaApi);
+    onButtonClick?.(emblaApi);
   }, [emblaApi, onButtonClick]);
 
   const onSelect = useCallback((emblaApi: EmblaCarouselType) => {

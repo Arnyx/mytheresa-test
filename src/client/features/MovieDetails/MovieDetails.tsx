@@ -1,23 +1,34 @@
-import { useWishlist } from '@/client/shared/hooks/useWishlist';
+import { useWishlist } from '@shared/hooks/useWishlist';
 import { useMovieDetails } from './hooks/useMovieDetails';
 import './movie-details.scss';
+import type { MovieType } from '@shared/types/MovieType';
+import { useState } from 'react';
 
 type MovieDetailsProps = {
   id: number;
+  type?: MovieType;
 };
 
-export const MovieDetails = ({ id }: MovieDetailsProps) => {
-  const { data, isLoading } = useMovieDetails(id);
+const MovieDetails = ({ id, type }: MovieDetailsProps) => {
+  const { data } = useMovieDetails(id);
   const { isInWishlist, toggleWishlist } = useWishlist();
   const wishlisted = isInWishlist(id);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No data found</p>;
+  if (!data) return null;
+
+  const typeModifier = type ? `movie-details--${type}` : '';
+  const imageLoadedModifier = imageLoaded ? `movie-details__image--loaded` : '';
 
   return (
-    <section className="movie-details">
+    <section className={`movie-details ${typeModifier}`}>
       <div className="movie-details__image-wrapper">
-        <img className="movie-details__image" src={data.backdropPath} alt={data.title} />
+        <img
+          className={`movie-details__image ${imageLoadedModifier}`}
+          src={data.backdropPath}
+          alt={data.title}
+          onLoad={() => setImageLoaded(true)}
+        />
       </div>
       <div className="movie-details__info">
         <h1 className="movie-details__title">{data.title}</h1>
@@ -34,3 +45,5 @@ export const MovieDetails = ({ id }: MovieDetailsProps) => {
     </section>
   );
 };
+
+export default MovieDetails;

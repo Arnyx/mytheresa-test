@@ -1,0 +1,28 @@
+@use 'sass:color';
+
+.loading {
+  height: 4px;
+  width: 100%;
+  --background: no-repeat linear-gradient(#{color.adjust($gray-light, $lightness: -10%)} 0 0);
+  background: var(--background), var(--background), $gray-light;
+  background-size: 60% 100%;
+  animation: progress 3s infinite;
+}
+
+@keyframes progress {
+  0% {
+    background-position:
+      -150% 0,
+      -150% 0;
+  }
+  66% {
+    background-position:
+      250% 0,
+      -150% 0;
+  }
+  100% {
+    background-position:
+      250% 0,
+      250% 0;
+  }
+}

@@ -7,3 +7,16 @@
     opacity: 0.5;
   }
 }
+
+@mixin fadein($duration: 1s) {
+  animation: fadein $duration;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

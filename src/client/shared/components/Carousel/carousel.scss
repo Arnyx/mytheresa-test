@@ -1,31 +1,52 @@
 $slide-size: calc(100% / 6);
+$slide-height: 300px;
 
 .movies-carousel {
   max-width: 100%;
   user-select: none;
+  @include fadein;
 
   &__wrapper {
     position: relative;
+  }
+
+  &__loading-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: $gray;
+    height: $slide-height;
+    border-radius: $border-radius;
+    @extend %pulse;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+    margin-bottom: 1.5rem;
   }
 
   &__viewport {
     overflow: hidden;
   }
 
-  &__container {
+  &__list {
     display: flex;
-    height: 300px;
+    height: $slide-height;
     backface-visibility: hidden;
     display: flex;
     touch-action: pan-y pinch-zoom;
-    gap: 1rem;
+    gap: $spacing * 2;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
   }
 
   &__slide {
     min-width: 0;
     flex: 0 0 $slide-size;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: $border-radius;
   }
 
   &__image {
@@ -54,10 +75,10 @@ $slide-size: calc(100% / 6);
 
   &__button {
     appearance: none;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba($black, 0.5);
     touch-action: manipulation;
     pointer-events: auto;
-    color: white;
+    color: $white;
     border: none;
     width: 48px;
     height: 48px;
@@ -75,7 +96,7 @@ $slide-size: calc(100% / 6);
     line-height: 1;
 
     &:not(:disabled):hover {
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba($black, 0.8);
     }
 
     &:disabled {
@@ -84,11 +105,11 @@ $slide-size: calc(100% / 6);
     }
 
     &--left {
-      left: 1rem;
+      left: $spacing * 2;
     }
 
     &--right {
-      right: 1rem;
+      right: $spacing * 2;
     }
   }
 }

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchMoviesByType } from '@/client/features/Movies/api/fetchMoviesByType';
+import { fetchMoviesByType } from '@features/Movies/api/fetchMoviesByType';
 import type { Movie } from '@/server/domain/models/Movie';
-import type { MovieType } from '@/client/shared/types/MovieType';
+import type { MovieType } from '@shared/types/MovieType';
 
 export function useInfiniteMovies(type: MovieType) {
   const [slides, setSlides] = useState<Movie[]>([]);
@@ -13,9 +13,9 @@ export function useInfiniteMovies(type: MovieType) {
     queryFn: () => fetchMoviesByType({ type, page }),
   });
 
-  const incrementPage = () => {
+  const incrementPage = useCallback(() => {
     setPage((prev) => prev + 1);
-  };
+  }, []);
 
   useEffect(() => {
     if (!data?.length) return;

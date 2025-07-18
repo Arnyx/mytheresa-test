@@ -1,9 +1,11 @@
-import { Container } from '@shared/components/Layout/Container/Container';
-import { Header } from '@shared/components/Layout/Header/Header';
+import Container from '@shared/components/Layout/Container/Container';
+import Header from '@shared/components/Layout/Header/Header';
 import '@styles/global.scss';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, Suspense, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Main from '@shared/components/Layout/Main/Main';
+import Loading from './shared/components/Loading/Loading';
 
 const HomePage = lazy(() => import('@/client/pages/HomePage'));
 const MovieDetailsPage = lazy(() => import('@/client/pages/MovieDetailsPage'));
@@ -24,16 +26,18 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Header />
-      <Container>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/details/:id" element={<MovieDetailsPage />} />
-          </Routes>
-        </Suspense>
-      </Container>
+      <Main>
+        <Header />
+        <Container>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/details/:id" element={<MovieDetailsPage />} />
+            </Routes>
+          </Suspense>
+        </Container>
+      </Main>
     </QueryClientProvider>
   );
 }
