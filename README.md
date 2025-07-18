@@ -109,12 +109,15 @@ npm run test:coverage
 
 ---
 
-## Screenshots
+## 📸 Screenshots
+
+### Homepage
 
 ![Home preview](./public/screenshot-1.jpg)
-![Details preview](./public/screenshot-2.jpg)
 
----
+### Movie Details
+
+![Details preview](./public/screenshot-2.jpg)
 
 ## 👨‍💻 Author
 
