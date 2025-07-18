@@ -17,7 +17,6 @@ export class LocalDatasource implements MoviesDatasource {
   private async loadMockMovies(): Promise<Array<Movie>> {
     const res = await Promise.resolve(moviesJson);
     const moviesWithRandomIds = this.assignRandomIds(res.results);
-    console.log(moviesWithRandomIds);
     return TheMovieDbMoviesMapper.fromDtoList(moviesWithRandomIds);
   }
 
