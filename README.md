@@ -111,8 +111,8 @@ npm run test:coverage
 
 ## Screenshots
 
-![Home preview](./public/screenshot-1.jpg)
-![Details preview](./public/screenshot-2.jpg)
+![Home preview](./public/screenshot-1.png)
+![Details preview](./public/screenshot-2.png)
 
 ---
 
