@@ -1,10 +1,14 @@
+import { MovieRepositoryBuilder } from './MovieRepositoryBuilder';
 import { env } from '@/server/config/env';
-import { TheMovieDbDatasourceImpl } from '../datasources/impl/TheMovieDbDatasourceImpl';
-import { HttpClient } from '../http/HttpClient';
-import { MovieRepositoryImpl } from '../repositories/MovieRepositoryImpl';
+import type { MovieRepositoryImpl } from '@/server/infrastructure/repositories/MovieRepositoryImpl';
+
+const strategies: Record<string, () => MovieRepositoryImpl> = {
+  TMDB: () => new MovieRepositoryBuilder().withTheMovieDbDatasource().build(),
+  LOCAL: () => new MovieRepositoryBuilder().withLocalDatasource().build(),
+};
 
 export const createMovieRepository = (): MovieRepositoryImpl => {
-  const api = new HttpClient(env.TMDB_BASE_URL, env.TMDB_ACCESS_TOKEN);
-  const datasource = new TheMovieDbDatasourceImpl(api);
-  return new MovieRepositoryImpl(datasource);
+  const type = env.DATASOURCE?.toUpperCase() || 'LOCAL';
+  const strategy = strategies[type] ?? strategies.LOCAL;
+  return strategy();
 };

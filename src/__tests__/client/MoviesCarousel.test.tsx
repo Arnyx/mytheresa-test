@@ -41,7 +41,7 @@ describe('<MovieDetails />', () => {
     const title = await screen.findByRole('heading', { name: 'Now playing' });
     expect(title).toBeInTheDocument();
 
-    const movie = await screen.findByRole('link', { name: 'The Last Shadow' });
+    const movie = await screen.findByRole('link', { name: 'How to Train Your Dragon' });
     expect(movie).toBeInTheDocument();
 
     const rightScrollButton = screen.getByRole('button', { name: 'Scroll Right' });
@@ -63,7 +63,7 @@ describe('<MovieDetails />', () => {
 
     const user = userEvent.setup();
 
-    const movie = await screen.findByRole('link', { name: 'The Last Shadow' });
+    const movie = await screen.findByRole('link', { name: 'How to Train Your Dragon' });
     expect(movie).toBeInTheDocument();
 
     await user.click(movie);

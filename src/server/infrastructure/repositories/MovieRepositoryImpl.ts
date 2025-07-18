@@ -1,5 +1,5 @@
 import type { MovieRepository } from '@/server/domain/repositories/MovieRepository';
-import type { TheMovieDbDatasource } from '../datasources/TheMovieDbDatasource';
+import type { MoviesDatasource } from '../datasources/MoviesDatasource';
 import type { Movie } from '@/server/domain/models/Movie';
 import type { GetMoviesOptions } from '@/server/domain/types/GetMoviesOptions';
 import type { MovieDetails } from '@/server/domain/models/MovieDetails';
