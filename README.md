@@ -18,7 +18,7 @@ Movie browsing application with dynamic carousels, movie detail pages, and wishl
   - Dynamic styling by category (font + button style)
 - ✅ Toggle between **TMDB API** or **local mock data** using `DATASOURCE` in `.env`
 - ✅ **SSR** (Server-Side Rendering) with Vite + Express
-- ✅ **Tests** implemented with Vitest
+- ✅ **Tests** implemented with Vitest and react-testing-library
 
 ---
 
@@ -95,7 +95,9 @@ npm run test:coverage
 - **Screaming Architecture on the frontend**:
   - Organizes code by **features** instead of technical layers for better maintainability.
   - Groups related components, hooks, and styles under the same feature folder (e.g., `Movies`, `MovieDetails`).
-- **SSR with streaming**: Implemented with React 18 + Vite middleware.
+- **SSR with streaming**:
+  - Enables **React.lazy()** for component-level lazy loading during SSR streaming.
+  - Uses **Express** for SSR handling and to expose custom API routes that mask external API calls.
 - **Styling**: SCSS for flexibility and BEM methodology.
 
 ---
