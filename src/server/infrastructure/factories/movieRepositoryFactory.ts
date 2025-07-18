@@ -9,5 +9,6 @@ const strategies: Record<string, () => MovieRepositoryImpl> = {
 
 export const createMovieRepository = (): MovieRepositoryImpl => {
   const type = env.DATASOURCE?.toUpperCase() || 'LOCAL';
-  return strategies[type] ? strategies[type]() : strategies.LOCAL();
+  const strategy = strategies[type] ?? strategies.LOCAL;
+  return strategy();
 };
