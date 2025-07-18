@@ -5,7 +5,7 @@ interface CarouselScrollButtonProps extends ButtonHTMLAttributes<HTMLButtonEleme
   carouselId: string;
 }
 
-export const CarouselScrollButton = ({ direction, carouselId, ...props }: CarouselScrollButtonProps) => {
+const CarouselScrollButton = ({ direction, carouselId, ...props }: CarouselScrollButtonProps) => {
   const isLeft = direction === 'left';
   const label = isLeft ? 'Scroll Left' : 'Scroll Right';
   const symbol = isLeft ? '\u2039' : '\u203A';
@@ -22,3 +22,5 @@ export const CarouselScrollButton = ({ direction, carouselId, ...props }: Carous
     </button>
   );
 };
+
+export default CarouselScrollButton;

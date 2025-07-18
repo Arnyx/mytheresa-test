@@ -1,5 +1,5 @@
 import type { Movie } from '@/server/domain/models/Movie';
-import type { MovieType } from '../../types/MovieType';
+import type { MovieType } from '@shared/types/MovieType';
 import './carousel.scss';
 import CarouselBody from './CarouselBody';
 import { useEmblaCarouselController } from './useCarouselController';

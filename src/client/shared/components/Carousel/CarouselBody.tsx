@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { CarouselLazyImage } from './CarouselLazyImage';
-import { CarouselScrollButton } from './CarouselScrollButton';
+import CarouselLazyImage from './CarouselLazyImage';
+import CarouselScrollButton from './CarouselScrollButton';
 import type { Movie } from '@/server/domain/models/Movie';
 import type { useEmblaCarouselController } from './useCarouselController';
 import { useScrollButtons } from './useScrollButtons';
-import type { MovieType } from '../../types/MovieType';
+import type { MovieType } from '@shared/types/MovieType';
 
 type CarouselBodyProps = ReturnType<typeof useEmblaCarouselController> & {
   carouselId: string;

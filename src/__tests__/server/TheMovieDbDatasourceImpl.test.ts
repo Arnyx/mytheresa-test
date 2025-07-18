@@ -1,6 +1,6 @@
 import movies from '@/test-utils/mocks/handlers/movies/movies-page-1.json';
 import movieDetails from '@/test-utils/mocks/handlers/movie/movie.json';
-import { createMovieRepository } from '@/server/infrastructure/factories/MovieRepositoryFactory';
+import { createMovieRepository } from '@/server/infrastructure/factories/movieRepositoryFactory';
 
 describe('TheMovieDbDatasourceImpl', () => {
   const datasource = createMovieRepository();

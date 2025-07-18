@@ -4,7 +4,7 @@ import {
   getPopularMoviesController,
   getTopRatedMoviesController,
 } from '../controllers/MoviesController';
-import { createMovieRepository } from '@/server/infrastructure/factories/MovieRepositoryFactory';
+import { createMovieRepository } from '@/server/infrastructure/factories/movieRepositoryFactory';
 
 const router = Router();
 const repository = createMovieRepository();

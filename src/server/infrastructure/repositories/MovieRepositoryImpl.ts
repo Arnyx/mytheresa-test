@@ -5,9 +5,9 @@ import type { GetMoviesOptions } from '@/server/domain/types/GetMoviesOptions';
 import type { MovieDetails } from '@/server/domain/models/MovieDetails';
 
 export class MovieRepositoryImpl implements MovieRepository {
-  private readonly datasource: TheMovieDbDatasource;
+  private readonly datasource: MoviesDatasource;
 
-  constructor(datasource: TheMovieDbDatasource) {
+  constructor(datasource: MoviesDatasource) {
     this.datasource = datasource;
   }
 

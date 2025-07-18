@@ -8,7 +8,7 @@ interface Props {
 
 const PLACEHOLDER_SRC = `data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D`;
 
-export const CarouselLazyImage = ({ inView, src, title }: Props) => {
+const CarouselLazyImage = ({ inView, src, title }: Props) => {
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const setLoaded = useCallback(() => {
@@ -27,3 +27,5 @@ export const CarouselLazyImage = ({ inView, src, title }: Props) => {
     </div>
   );
 };
+
+export default CarouselLazyImage;
