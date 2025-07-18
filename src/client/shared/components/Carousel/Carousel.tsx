@@ -13,7 +13,6 @@ interface Props {
 
 const Carousel = ({ title, items, type, onEndReached }: Props) => {
   const emblaControllerProps = useEmblaCarouselController({
-    slidesLength: items.length,
     onEndReached: onEndReached ?? (() => {}),
   });
   const carouselId = `carousel-title${type ? `-${type}` : ''}`;

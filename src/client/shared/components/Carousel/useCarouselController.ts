@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { EmblaCarouselType, EmblaOptionsType, EngineType } from 'embla-carousel';
+import type { EmblaOptionsType, EngineType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 
 type Props = {
-  slidesLength: number;
   onEndReached: () => void;
 };
 
@@ -22,41 +21,41 @@ const COPY_ENGINE_MODULES_ON_RELOAD: (keyof EngineType)[] = [
   'target',
 ];
 
-export const useEmblaCarouselController = ({ slidesLength, onEndReached }: Props) => {
+export const useEmblaCarouselController = ({ onEndReached }: Props) => {
   const listenForScrollRef = useRef(true);
-  const scrollListenerRef = useRef<() => void>(() => undefined);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [slidesInView, setSlidesInView] = useState<Set<number>>(new Set());
-  const hasLoaded = useRef(false);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     ...EMBLA_OPTIONS,
     watchSlides: (emblaApi) => {
-      const reloadEmbla = (): void => {
-        const oldEngine = emblaApi.internalEngine();
-        emblaApi.reInit();
+      const getEngine = () => emblaApi.internalEngine();
 
-        const newEngine = emblaApi.internalEngine();
-        COPY_ENGINE_MODULES_ON_RELOAD.forEach((engineModule) => {
-          Object.assign(newEngine[engineModule], oldEngine[engineModule]);
+      const restoreEngineState = (oldEngine: EngineType, newEngine: EngineType) => {
+        COPY_ENGINE_MODULES_ON_RELOAD.forEach((module) => {
+          Object.assign(newEngine[module], oldEngine[module]);
         });
 
         newEngine.translate.to(oldEngine.location.get());
         const { index } = newEngine.scrollTarget.byDistance(0, false);
         newEngine.index.set(index);
         newEngine.animation.start();
+      };
 
-        setLoadingMore(false);
+      const reloadEmbla = () => {
+        const oldEngine = getEngine();
+        emblaApi.reInit();
+        const newEngine = getEngine();
+
+        restoreEngineState(oldEngine, newEngine);
         listenForScrollRef.current = true;
       };
 
-      const reloadAfterPointerUp = (): void => {
+      const reloadAfterPointerUp = () => {
         emblaApi.off('pointerUp', reloadAfterPointerUp);
         reloadEmbla();
       };
 
-      const engine = emblaApi.internalEngine();
-
+      const engine = getEngine();
       if (engine.dragHandler.pointerDown()) {
         const boundsActive = engine.limit.reachedMax(engine.target.get());
         engine.scrollBounds.toggleActive(boundsActive);
@@ -67,51 +66,56 @@ export const useEmblaCarouselController = ({ slidesLength, onEndReached }: Props
     },
   });
 
-  useEffect(() => {
-    if (hasLoaded.current || !slidesLength || !emblaApi) return;
+  const handleScroll = useCallback(() => {
+    if (!emblaApi || !listenForScrollRef.current) return;
 
-    hasLoaded.current = true;
+    const lastSlide = emblaApi.slideNodes().length - 1;
+    if (emblaApi.slidesInView().includes(lastSlide)) {
+      listenForScrollRef.current = false;
+      onEndReached();
+    }
+  }, [emblaApi, onEndReached]);
+
+  const handleResize = useCallback(() => {
+    if (!emblaApi) return;
+
     emblaApi.reInit();
-  }, [emblaApi, slidesLength]);
+  }, [emblaApi]);
 
-  const onScroll = useCallback(
-    (emblaApi: EmblaCarouselType) => {
-      if (!listenForScrollRef.current) return;
+  const updateSlidesInView = useCallback(() => {
+    if (!emblaApi) return;
 
-      const lastSlide = emblaApi.slideNodes().length - 1;
-      const lastSlideInView = emblaApi.slidesInView().includes(lastSlide);
-
-      if (!loadingMore && lastSlideInView) {
-        listenForScrollRef.current = false;
-        setLoadingMore(true);
-        onEndReached();
-      }
-    },
-    [loadingMore, onEndReached]
-  );
+    setSlidesInView((prev) => {
+      const inView = emblaApi.slidesInView();
+      return new Set([...prev, ...inView]);
+    });
+  }, [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
-    scrollListenerRef.current = () => onScroll(emblaApi);
-    emblaApi.on('scroll', scrollListenerRef.current);
 
-    const onResize = () => emblaApi.reInit();
-    window.addEventListener('resize', onResize);
+    emblaApi.on('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+    emblaApi.on('destroy', () => window.removeEventListener('resize', handleResize));
 
-    emblaApi.on('destroy', () => window.removeEventListener('resize', onResize));
-  }, [emblaApi, onScroll]);
-
-  const updateSlidesInView = useCallback((emblaApi: EmblaCarouselType) => {
-    const inView = emblaApi.slidesInView();
-    setSlidesInView((prev) => new Set([...prev, ...inView]));
-  }, []);
+    return () => {
+      emblaApi.off('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [emblaApi, handleScroll, handleResize]);
 
   useEffect(() => {
     if (!emblaApi) return;
-    updateSlidesInView(emblaApi);
+
+    updateSlidesInView();
     emblaApi.on('slidesInView', updateSlidesInView);
     emblaApi.on('reInit', updateSlidesInView);
+
+    return () => {
+      emblaApi.off('slidesInView', updateSlidesInView);
+      emblaApi.off('reInit', updateSlidesInView);
+    };
   }, [emblaApi, updateSlidesInView]);
 
-  return { emblaRef, emblaApi, slidesInView };
+  return { emblaApi, slidesInView, emblaRef };
 };
